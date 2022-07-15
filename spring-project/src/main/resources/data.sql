@@ -1,1 +1,3 @@
-insert into article values (0,'test',now(),'uno,','#tag',now(),'uno','titl');
+insert into article values (2,now(),'uno,',now(),'uno','content','#hash','titl');
+insert into article values (3,now(),'uno,',now(),'uno','content','#hash','titl');
+
