@@ -1,5 +1,6 @@
 package com.example.springproject.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc    //SpringBootTest 에서 Mock 을 사용할 수 없기에 이걸 적어줘야 사용간으ㅜ
 @Transactional
 @SpringBootTest //@WebMvcTest슬라이스 테스트 MockMVC를 사용할 수 있다
+@Disabled("Spring Data Rest 통합테스트는 불필요하므로 제외시킴")
 public class DataRestTest {
 
     private final MockMvc mvc;  //WebMVCTest로 주입이 가능해진다
