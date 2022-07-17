@@ -27,7 +27,7 @@ import java.util.Set;
 })
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Article {
+public class Article extends AuditingFields{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;        //내가 부여하는게 아닌 영속성할떄 자동 부여하는 번호이기에 Setter로 건드리면 안됨
@@ -47,18 +47,6 @@ public class Article {
         @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)        //상대쪽 변수명 이걸하지 않으면 두 엔티티를 합쳐서 테이블 하나를 만든다
         private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
                 //중복을 허용하지 않고 여기서 다 보겠다 이런 의도임
-        @CreatedDate
-        @Column(nullable = false)
-        private LocalDateTime createdAt;
-        @CreatedBy      //누가 만들었는지 알게해주는 것인데 이거 설정은 JpaConfig에 함
-        @Column(nullable = false,length = 100)
-        private String createdBy;
-        @LastModifiedDate
-        @Column(nullable = false)
-        private LocalDateTime modifiedAt;
-        @LastModifiedBy
-        @Column(nullable = true,length = 100)
-        private String modifiedBy;
 
 
 
