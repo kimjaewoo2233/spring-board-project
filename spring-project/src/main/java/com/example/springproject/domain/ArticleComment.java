@@ -22,6 +22,9 @@ import java.util.Objects;
 })
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+
+@EntityListeners(AuditingEntityListener.class)
+
 public class ArticleComment extends AuditingFields {
 
     @Id
