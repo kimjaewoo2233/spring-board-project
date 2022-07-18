@@ -43,7 +43,10 @@ class JpaRepositoryTest {
         //then
         assertThat(articleList)
                 .isNotNull()
+
                 .hasSize(5);
+
+                .hasSize(2);
     }
     @DisplayName("insert 테스트")
     @Test
@@ -59,10 +62,12 @@ class JpaRepositoryTest {
     @DisplayName("update 테스트")
     @Test
     void givenTestData_whenUpdating_thenWorkFind(){
-        Article article = Article.of("new article","new content","#spring");
-        articleRepository.save(article);
 
         Article articleFirst = articleRepository.findById(4L).orElseThrow();
+
+
+        Article articleFirst = articleRepository.findById(2L).orElseThrow();
+
         String updatedHashing = "#springboot";
         articleFirst.setHashtag(updatedHashing);
         Article updatedArticle = articleRepository.save(articleFirst);
@@ -78,13 +83,17 @@ class JpaRepositoryTest {
         List<ArticleComment> comments = new ArrayList<>();
 
 
+
         Article articleFirst = articleRepository.findById(4L).orElseThrow();
+
+        Article articleFirst = articleRepository.findById(2L).orElseThrow();
+
         comments.add(ArticleComment.of(articleFirst,"댓글1"));
         comments.add(ArticleComment.of(articleFirst,"댓글2"));
 
         articleCommentRepository.saveAll(comments);
 
-        articleRepository.findById(0L).get().getArticleComments().forEach( (it) -> {System.out.println(it+"test");});
+        articleRepository.findById(2L).get().getArticleComments().forEach( (it) -> {System.out.println(it+"test");});
       //  articleRepository.delete(articleFirst);
 
     }

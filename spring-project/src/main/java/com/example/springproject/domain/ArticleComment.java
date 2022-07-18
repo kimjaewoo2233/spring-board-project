@@ -22,7 +22,9 @@ import java.util.Objects;
 })
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 @EntityListeners(AuditingEntityListener.class)
+
 public class ArticleComment extends AuditingFields {
 
     @Id
@@ -31,7 +33,6 @@ public class ArticleComment extends AuditingFields {
     //optional = false 필수값이라는 걸 나타낸다.
     @Setter @ManyToOne(optional = false) private Article article;
     @Setter @Column(nullable = false,length = 500) private String content;
-
 
 
     private ArticleComment(Article article,String content){

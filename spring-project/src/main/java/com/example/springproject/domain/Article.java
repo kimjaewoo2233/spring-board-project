@@ -27,6 +27,8 @@ import java.util.Set;
 })
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+
+
 public class Article extends AuditingFields{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,9 @@ public class Article extends AuditingFields{
         @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)        //상대쪽 변수명 이걸하지 않으면 두 엔티티를 합쳐서 테이블 하나를 만든다
         private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
                 //중복을 허용하지 않고 여기서 다 보겠다 이런 의도임
+
+
+
 
 
 
