@@ -3,6 +3,7 @@ package com.example.springproject.repository;
 import com.example.springproject.config.JpaConfig;
 import com.example.springproject.domain.Article;
 import com.example.springproject.domain.ArticleComment;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ class JpaRepositoryTest {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
     }
-
+    @Disabled("데이터가 없어서 꺼놈")
     @DisplayName("select 테스트")
     @Test
     void givenTestData_whenSelecting_thenWorksFine(){
@@ -43,6 +44,7 @@ class JpaRepositoryTest {
                 .isNotNull()
                 .hasSize(1);
     }
+    @Disabled("데이터가 없어서 꺼놈")
     @DisplayName("insert 테스트")
     @Test
     void givenTestData_whenInserting_thenWorkFind(){
@@ -54,6 +56,7 @@ class JpaRepositoryTest {
                 .isEqualTo(previousCount+1);
 
     }
+    @Disabled("데이터가 없어서 꺼놈")
     @DisplayName("update 테스트")
     @Test
     void givenTestData_whenUpdating_thenWorkFind(){
@@ -69,7 +72,7 @@ class JpaRepositoryTest {
         assertThat(updatedArticle).hasFieldOrPropertyWithValue("hashtag",updatedHashing);
         //hashtag 값이 저 값으로 바뀌었는지 확인
     }
-
+    @Disabled("데이터가 없어서 꺼놈")
     @DisplayName("delete 테스트")
     @Test
     void givenTestData_whenDeleteing_thenWorkFine(){
