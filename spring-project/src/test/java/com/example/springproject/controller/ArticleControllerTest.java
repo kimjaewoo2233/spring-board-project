@@ -27,7 +27,7 @@ class ArticleControllerTest {
         this.mvc = mockMvc;
     }
 
-    @Disabled("구현중")
+  //  @Disabled("구현중")
     @DisplayName("{view}{get} 게시글 리스트 - 정상 호출")
     @Test
     public void givenNothing_whenRequestingArticleVsView_thenReturnsArticleView() throws Exception{
@@ -36,7 +36,7 @@ class ArticleControllerTest {
             //when
             mvc.perform(get("/articles"))
                     .andExpect(status().isOk())
-                    .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML))
+                    .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                     .andExpect(view().name("articles/index"))       //view에 이름이 무엇인지 검사
                     .andExpect(model().attributeExists("articles"));
             //then
@@ -49,7 +49,7 @@ class ArticleControllerTest {
     public void givenNothing_whenRequestingARticleView_thenReturnArticleView() throws Exception{
         mvc.perform(get("/articles/1"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML))
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/detail"))
                 .andExpect(model().attributeExists("article"))
                 .andExpect(model().attributeExists("articleComments"));
@@ -62,7 +62,7 @@ class ArticleControllerTest {
 
         mvc.perform(get("/articles/search"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML))
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(model().attributeExists("articles/search"));
         }
     @Disabled("구현중")
@@ -71,7 +71,7 @@ class ArticleControllerTest {
     public void givenNoting_whenRequestingArticleHashtagSearchView_thenReturningArticleSearchView() throws  Exception{
         mvc.perform(get("/articles/search-hashtag"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML))
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(model().attributeExists("articles/search-hashtag"));
     }
 
