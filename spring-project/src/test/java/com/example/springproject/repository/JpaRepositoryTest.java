@@ -43,9 +43,7 @@ class JpaRepositoryTest {
         //then
         assertThat(articleList)
                 .isNotNull()
-
-                .hasSize(5);
-
+                .hasSize(5)
                 .hasSize(2);
     }
     @Disabled("데이터가 없어서 꺼놈")
@@ -65,7 +63,6 @@ class JpaRepositoryTest {
     @Test
     void givenTestData_whenUpdating_thenWorkFind(){
 
-        Article articleFirst = articleRepository.findById(4L).orElseThrow();
 
 
         Article articleFirst = articleRepository.findById(2L).orElseThrow();
@@ -88,7 +85,6 @@ class JpaRepositoryTest {
 
         Article articleFirst = articleRepository.findById(4L).orElseThrow();
 
-        Article articleFirst = articleRepository.findById(2L).orElseThrow();
 
         comments.add(ArticleComment.of(articleFirst,"댓글1"));
         comments.add(ArticleComment.of(articleFirst,"댓글2"));

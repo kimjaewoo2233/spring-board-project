@@ -40,30 +40,6 @@ public class AuditingFields {
     @Column(nullable = false, length = 100)
     private String modifiedBy; // 수정자
 
-import java.time.LocalDateTime;
-
-
-@ToString
-@Getter //자동 세팅되는 값들이기에 setter는 놓지 않는다.
-@MappedSuperclass
-@EntityListeners(value = AuditingEntityListener.class)
-public class AuditingFields {
-
-  //  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) //파싱에 대한 룰 지정한다.
-    @CreatedDate
-    @Column(nullable = false,updatable = false)
-    private LocalDateTime createdAt;
-
-    @CreatedBy      //누가 만들었는지 알게해주는 것인데 이거 설정은 JpaConfig에 함
-    @Column(nullable = false,updatable = false,length = 100)
-    private String createdBy;
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private LocalDateTime modifiedAt;
-    @LastModifiedBy
-    @Column(nullable = true,length = 100)
-    private String modifiedBy;
 
 
 }
