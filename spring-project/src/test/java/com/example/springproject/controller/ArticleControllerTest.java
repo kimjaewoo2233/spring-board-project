@@ -1,10 +1,12 @@
 package com.example.springproject.controller;
 
+import com.example.springproject.config.SecurityConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @DisplayName("View 컨트롤러 - 게시글")
+@Import(SecurityConfig.class)   //Security 접근허용함
 @WebMvcTest(ArticleController.class)        //클래스를 지정하지 않으면 모든 컨트롤러를 읽어들인다.
 class ArticleControllerTest {
 
@@ -43,7 +46,6 @@ class ArticleControllerTest {
 
     }
 
-    @Disabled("구현중")
     @DisplayName("{view}{get} 게시글 상세 페이지 - 정상 호출")
     @Test
     public void givenNothing_whenRequestingARticleView_thenReturnArticleView() throws Exception{
