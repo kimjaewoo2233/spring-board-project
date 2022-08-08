@@ -2,8 +2,11 @@ package com.example.springproject.repository;
 
 import com.example.springproject.domain.Article;
 import com.example.springproject.domain.QArticle;
+import com.example.springproject.repository.querydsl.ArticleRepositoryCustom;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -11,13 +14,26 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import javax.print.DocFlavor;
+import java.util.List;
 
 @RepositoryRestResource
 public interface ArticleRepository extends
+        ArticleRepositoryCustom,
         JpaRepository<Article,Long>,
         QuerydslPredicateExecutor<Article>,
         QuerydslBinderCustomizer<QArticle>
 {
+    Page<Article> findByTitle(String title, Pageable pageable);     //제목으로 검색
+    Page<Article> findByTitleContaining(String title, Pageable pageable);   //문자열로 받는 %title% 검색
+    Page<Article> findByContentContaining(String content, Pageable pageable);
+    Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
+    Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
+    Page<Article> findByHashtag(String hashtag, Pageable pageable);
+
+    void deleteByIdAndUserAccount_UserId(long articleId, String userId);
+
+
+
     @Override   //QuerydslBinderCustomizer 를 사용하려면 이 메소드를 오버라이딩
     default void customize(QuerydslBindings bindings, QArticle root){
         //java 8 부터 인터페이스에 구현이 가능해짐

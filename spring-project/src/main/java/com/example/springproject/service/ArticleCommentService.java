@@ -19,8 +19,16 @@ public class ArticleCommentService {
 
 
     @Transactional(readOnly = true) //읽는 것이다 읽기만하는 메소드에는 readOnly해주는게 훨씬좋다
-    public List<ArticleCommentDto> searchArticleComment(Long articleId) {
+    public List<ArticleCommentDto> searchArticleComments(Long articleId) {
         return List.of();
+    }
+
+    public void saveArticleComment(ArticleCommentDto dto){
+
+    }
+    public void updateArticleComment(ArticleCommentDto dto){
+    }
+    public void deleteArticleComment(Long articleCommentId){
 
     }
 }

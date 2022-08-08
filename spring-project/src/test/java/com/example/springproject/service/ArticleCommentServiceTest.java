@@ -38,7 +38,7 @@ class ArticleCommentServiceTest {
         given(articleRepository.findById(articleId))
                 .willReturn(Optional.of(Article.of("title", "content", "#java")));
         //When
-        List<ArticleCommentDto> articleComments = sut.searchArticleComment(articleId);
+        List<ArticleCommentDto> articleComments = sut.searchArticleComments(articleId);
         //Then
         assertThat(articleComments).isNotNull();
         then(articleRepository).should().findById(articleId);
