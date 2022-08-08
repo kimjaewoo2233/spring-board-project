@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record ArticleWithCommentsDto(
+public record ArticleWithCommentsDto(   //ArticleDTo는 댓글을 못가져옴 그래서 이거만듬
         Long id,
         UserAccountDto userAccountDto,
         Set<ArticleCommentDto> articleCommentDtoSet,

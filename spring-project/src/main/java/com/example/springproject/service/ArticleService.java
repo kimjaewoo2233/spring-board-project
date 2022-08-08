@@ -49,10 +49,10 @@ public class ArticleService {
                 .map(ArticleWithCommentsDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: "+articleId));
     }
-    @Transactional(readOnly = true)
-    public ArticleDto getArticle(Long articleId){
+    @Transactional(readOnly = true)         // 단건조회
+    public ArticleWithCommentsDto getArticle(Long articleId){
         return articleRepository.findById(articleId)
-                .map(ArticleDto::from)
+                .map(ArticleWithCommentsDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId:" + articleId));
     }
 
@@ -74,6 +74,7 @@ public class ArticleService {
                     if(dto.content() != null){ article.setContent(dto.content());}
                     article.setHashtag(dto.hashtag());
                 }
+                //클래스단우ㅢ로 트랜잭션이 묶여있기에 영속성 컨텍스트가 열려있고 커밋할떄 변한것을 감지하여 반영한다. 그래서 save를 안 써도된다.
             } catch (EntityNotFoundException e){
                 log.warn("게시글 업데이트 실패. 게시글을 수정하는데 필요한 정보를 찾을 수 없습니다 - {}", e.getLocalizedMessage());
             }
