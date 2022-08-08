@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
@@ -44,14 +44,15 @@ public class Article extends AuditingFields{
         @Setter
         private String hashtag;
         //실무에서는 양방향 바인딩을 잘 하지 않는다.
-        @OrderBy("id")
+
+        @OrderBy("createdAt DESC")
         @ToString.Exclude //순환참조 때문에 한쪽에 ToString을 끊는데 보통 One쪽을 끊는다     / cascade로 게시물이 사라지면 댓글도 모두사리ㅏ짐
         @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)        //상대쪽 변수명 이걸하지 않으면 두 엔티티를 합쳐서 테이블 하나를 만든다
         private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
                 //중복을 허용하지 않고 여기서 다 보겠다 이런 의도임
 
 
-
+        @Setter @ManyToOne(optional = false) @JoinColumn(name = "userId")  private UserAccount userAccount;
 
 
 
@@ -64,9 +65,19 @@ public class Article extends AuditingFields{
                 this.content = content;
                 this.hashtag = hashtag;
         }
+        private Article(UserAccount userAccount,String title, String content, String hashtag) {
+                this.userAccount =  userAccount;
+                this.title = title;                     //이 3가지를 제외한 나머지는 값이 자동생성
+                this.content = content;
+                this.hashtag = hashtag;
+        }
         public static Article of(String title,String content,String hashtag){
                             //new 키워드를 사용하지 않고 객체를 만들 수 있도록 한다.
                 return new Article(title,content,hashtag);
+        }
+        public static Article of(UserAccount userAccount,String title,String content,String hashtag){
+                //new 키워드를 사용하지 않고 객체를 만들 수 있도록 한다.
+                return new Article(userAccount,title,content,hashtag);
         }
 
         @Override                                       //id != null 영속화가 되면 통과

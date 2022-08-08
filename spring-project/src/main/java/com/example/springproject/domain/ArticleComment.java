@@ -32,6 +32,8 @@ public class ArticleComment extends AuditingFields {
     private Long id;
     //optional = false 필수값이라는 걸 나타낸다.
     @Setter @ManyToOne(optional = false) private Article article;
+
+    @Setter @ManyToOne(optional = false) private UserAccount userAccount;
     @Setter @Column(nullable = false,length = 500) private String content;
 
 
