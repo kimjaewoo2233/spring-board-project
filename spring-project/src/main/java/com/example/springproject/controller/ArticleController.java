@@ -5,7 +5,9 @@ import com.example.springproject.domain.type.SearchType;
 import com.example.springproject.dto.response.ArticleResponse;
 import com.example.springproject.dto.response.ArticleWithCommentsResponse;
 import com.example.springproject.service.ArticleService;
+import com.example.springproject.service.PaginationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -32,6 +34,9 @@ import java.util.List;
 public class ArticleController {
 
     private final ArticleService articleService;
+
+
+    private final PaginationService paginationService;
     @GetMapping
     public String articles(ModelMap map,
                            @RequestParam(required = false) SearchType searchType,
@@ -40,6 +45,10 @@ public class ArticleController {
                                    sort = "createdAt",
                                    direction = Sort.Direction.DESC)Pageable pageable
                            ){
+            Page<ArticleResponse> articles = articleService.searchArticles(searchType,searchValue,pageable).map(ArticleResponse::from);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(),articles.getTotalPages());
+
+            map.addAttribute("paginationBarNumbers",barNumbers);
             map.addAttribute("articles", articleService.searchArticles(searchType,searchValue,pageable).map(ArticleResponse::from));
             map.addAttribute("searchTypes",SearchType.values());//enum타입 종류 모두 뷰로뿌림
             return "articles/index";

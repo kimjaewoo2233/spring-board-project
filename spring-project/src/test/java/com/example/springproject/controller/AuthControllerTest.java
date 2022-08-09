@@ -20,6 +20,8 @@ public class AuthControllerTest {
         //보면 login관련 컨트롤러를 만들지 않았는데 통과한다 시큐리티 때문이다
     private final MockMvc mvc;
 
+
+
     public AuthControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
