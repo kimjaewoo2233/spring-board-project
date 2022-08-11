@@ -1,6 +1,8 @@
 package com.example.springproject.dto;
 
+import com.example.springproject.domain.Article;
 import com.example.springproject.domain.ArticleComment;
+import com.example.springproject.domain.UserAccount;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +36,14 @@ public record ArticleCommentDto(
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
                 entity.getModifiedBy()
+        );
+    }
+
+    public ArticleComment toEntity(Article article, UserAccount userAccount) {
+        return ArticleComment.of(
+                article,
+                userAccount,
+                content
         );
     }
 }
