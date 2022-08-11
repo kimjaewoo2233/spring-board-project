@@ -86,8 +86,8 @@ class JpaRepositoryTest {
         Article articleFirst = articleRepository.findById(4L).orElseThrow();
 
 
-        comments.add(ArticleComment.of(articleFirst,"댓글1"));
-        comments.add(ArticleComment.of(articleFirst,"댓글2"));
+//        comments.add(ArticleComment.of(articleFirst,""));
+//        comments.add(ArticleComment.of(articleFirst,"댓글2"));
 
         articleCommentRepository.saveAll(comments);
 

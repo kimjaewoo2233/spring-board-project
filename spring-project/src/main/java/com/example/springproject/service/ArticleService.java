@@ -4,7 +4,6 @@ import com.example.springproject.domain.Article;
 import com.example.springproject.domain.UserAccount;
 import com.example.springproject.domain.type.SearchType;
 import com.example.springproject.dto.ArticleDto;
-import com.example.springproject.dto.ArticleUpdateDto;
 import com.example.springproject.dto.ArticleWithCommentsDto;
 import com.example.springproject.repository.ArticleRepository;
 import com.example.springproject.repository.UserAccountRepository;
@@ -94,7 +93,7 @@ public class ArticleService {
         return articleRepository.findByHashtag(hashtag,pageable).map(ArticleDto::from);
         //해쉬태그로 검색함 그리고 page로 리턴한다. 읽어오는 것이기에 readyOnly
     }
-    public List<String> getHashtages(){
+    public List<String> getHashtags(){
         return articleRepository.findAllDistinctHashtags();
     }
 
