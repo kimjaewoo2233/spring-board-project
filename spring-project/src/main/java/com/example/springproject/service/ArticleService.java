@@ -49,9 +49,9 @@ public class ArticleService {
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: "+articleId));
     }
     @Transactional(readOnly = true)         // 단건조회
-    public ArticleWithCommentsDto getArticle(Long articleId){
+    public ArticleDto getArticle(Long articleId){
         return articleRepository.findById(articleId)
-                .map(ArticleWithCommentsDto::from)
+                .map(ArticleDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId:" + articleId));
     }
 

@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 @DisplayName("View 컨트롤러 - 게시글")
-@Import(SecurityConfig.class)   //Security 접근허용함
+@Import({SecurityConfig.class})   //Security 접근허용함
 @WebMvcTest(ArticleController.class)        //클래스를 지정하지 않으면 모든 컨트롤러를 읽어들인다.
 class ArticleControllerTest {
 
@@ -78,7 +78,7 @@ class ArticleControllerTest {
     @Test
     public void givenNothing_whenRequestingARticleView_thenReturnArticleView() throws Exception {
         Long articleId = 1L;
-        given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentsDto());
+        given(articleService.getArticle(articleId)).willReturn(createArticleDto());
 
         mvc.perform(get("/articles/" + articleId))
                 .andExpect(status().isOk())

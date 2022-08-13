@@ -92,7 +92,7 @@ class ArticleServiceTest {
             given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
             //when
-            ArticleWithCommentsDto dto = sut.getArticle(articleId);
+            ArticleDto dto = sut.getArticle(articleId);
             //Then
             assertThat(dto)
                     .hasFieldOrPropertyWithValue("title",article.getTitle())

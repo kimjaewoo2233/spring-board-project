@@ -4,6 +4,7 @@ import com.example.springproject.domain.Article;
 import com.example.springproject.dto.ArticleCommentDto;
 import com.example.springproject.repository.ArticleCommentRepository;
 import com.example.springproject.repository.ArticleRepository;
+import com.example.springproject.repository.UserAccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +30,8 @@ class ArticleCommentServiceTest {
     @Mock
     private ArticleRepository articleRepository;
 
+    @Mock
+    private UserAccountRepository userAccountRepository;
     @DisplayName("게시글 ID로 조회하면, 해당하는 댓글 리스트를 반환한다.")
     @Test
     void givenArticleId_whenSearchingComments_thenReturnsComments(){

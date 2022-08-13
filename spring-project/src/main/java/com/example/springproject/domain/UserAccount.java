@@ -1,5 +1,6 @@
 package com.example.springproject.domain;
 
+import com.example.springproject.dto.UserAccountDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,17 +15,18 @@ import java.util.Objects;
         @Index(columnList = "createdBy")
 })
 @Entity
-public class UserAccount extends AuditingFields{
+public class UserAccount extends AuditingFields {
     @Id
     @Column(length = 50)
     private String userId;
 
-    @Setter
-    @Column(nullable = false) private String userPassword;
+    @Setter @Column(nullable = false) private String userPassword;
 
     @Setter @Column(length = 100) private String email;
     @Setter @Column(length = 100) private String nickname;
     @Setter private String memo;
+
+
     protected UserAccount() {}
 
     private UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
@@ -50,4 +52,5 @@ public class UserAccount extends AuditingFields{
     public int hashCode() {
         return Objects.hash(userId);
     }
+
 }
