@@ -4,7 +4,6 @@ import com.example.springproject.domain.Article;
 import com.example.springproject.domain.UserAccount;
 import com.example.springproject.domain.type.SearchType;
 import com.example.springproject.dto.ArticleDto;
-import com.example.springproject.dto.ArticleUpdateDto;
 import com.example.springproject.dto.ArticleWithCommentsDto;
 import com.example.springproject.dto.UserAccountDto;
 import com.example.springproject.repository.ArticleRepository;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,7 +21,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.doNothing;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,6 +51,38 @@ class ArticleServiceTest {
 
 
         }
+        @DisplayName("검색어 없이 게시글을 해시태그 검색하면, 빈 페이즐르 반환한다.")
+        @Test
+        void givenNoSearchParameters_whenSearchingArticlesVaiaHashtag_thenReturnArticlesPage(){
+            //Given
+            String hashtag = "#java";
+            Pageable pageable = Pageable.ofSize(20);
+            given(articleRepository.findByHashtag(hashtag,pageable)).willReturn(Page.empty(pageable));
+
+            //When
+            Page<ArticleDto> articles = sut.searchArticlesViaHashtag(null,pageable);
+            //Then
+            assertThat(articles).isEqualTo(Page.empty(pageable));
+            then(articleRepository).should().findByHashtag(hashtag,pageable);
+
+        }
+        @DisplayName("해시태그를 조회하면 유니크 해시태그 리스트를 반환한다.")
+        @Test
+        void givenNothing_whenCalling_thenReturnHashtags(){
+            //Given
+            List<String> expectedHashtags = List.of("#java","#spring","#boot");
+            given(articleRepository.findAllDistinctHashtags()).willReturn(expectedHashtags);
+
+            //When
+            List<String> actualHashtags = sut.getHashtags();
+
+            //Then
+            assertThat(actualHashtags).isEqualTo(expectedHashtags);
+            then(articleRepository).should().findAllDistinctHashtags();
+        }
+
+
+
         @DisplayName("게시글을 조회하면, 게시글을 반환한다.")
         @Test
         void givenArticleId_whenSearchingArticle_thenReturnsArticle(){
@@ -63,7 +92,7 @@ class ArticleServiceTest {
             given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
             //when
-            ArticleWithCommentsDto dto = sut.getArticle(articleId);
+            ArticleDto dto = sut.getArticle(articleId);
             //Then
             assertThat(dto)
                     .hasFieldOrPropertyWithValue("title",article.getTitle())
