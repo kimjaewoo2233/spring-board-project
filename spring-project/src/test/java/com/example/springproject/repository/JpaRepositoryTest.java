@@ -9,18 +9,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 //@ActiveProfiles("testdb") yml에서 설정한 test db 사용하기
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Disabled
 @DisplayName("JPA 연결 테스트")
-@Import(JpaConfig.class)    //Configuration으로 등록한 파일이 읽히지 않을 수 있어서 이걸 넣는다.
+@Import(JpaRepositoryTest.TestJpaConfig.class)    //Configuration으로 등록한 파일이 읽히지 않을 수 있어서 이걸 넣는다.
 @DataJpaTest    //슬라이스 테스트 할거임  --test메소드들이 전부 Transactional로 묶여있따
 class JpaRepositoryTest {
 
@@ -94,5 +98,15 @@ class JpaRepositoryTest {
         articleRepository.findById(2L).get().getArticleComments().forEach( (it) -> {System.out.println(it+"test");});
       //  articleRepository.delete(articleFirst);
 
+    }
+
+
+    @TestConfiguration  //테스트할떄만 사용하는 설정클래스로 등록한다.
+    public static class TestJpaConfig{  //DB 테스트를 하는데 시큐리티 때문에 에러남 그래서 이렇게 설정해서
+        // 계정 정보 넣는건 그냥 문자열이 들어가도록 설정이 필요하다다
+       @Bean
+        public AuditorAware<String> auditorAware(){
+            return () -> Optional.of("uno");
+        }
     }
 }

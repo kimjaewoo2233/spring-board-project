@@ -2,6 +2,7 @@ package com.example.springproject.controller;
 
 
 import com.example.springproject.config.SecurityConfig;
+import com.example.springproject.util.FormDataEncoder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 인증테스트")
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, FormDataEncoder.class})
 @WebMvcTest //시큐리티 적용된 테스트
 public class AuthControllerTest {
         //보면 login관련 컨트롤러를 만들지 않았는데 통과한다 시큐리티 때문이다
