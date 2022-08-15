@@ -93,10 +93,9 @@ public class ArticleController {
     }
 
     @PostMapping("/form")
-    public String postNewArticle(ArticleRequest articleRequest){
-        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
-                "uno","asdf1234","uno@mail.com","Uno","memo",null,null,null, null
-        )));
+    public String postNewArticle(ArticleRequest articleRequest,
+                                 @AuthenticationPrincipal BoardPrincipal boardPrincipal){
+        articleService.saveArticle(articleRequest.toDto(boardPrincipal.toDto()));
 
         return "redirect::/articles";
     }
@@ -111,11 +110,11 @@ public class ArticleController {
     }
 
     @PostMapping ("/{articleId}/form")
-    public String updateArticle(@PathVariable Long articleId, ArticleRequest articleRequest) {
+    public String updateArticle(@PathVariable Long articleId,
+                                ArticleRequest articleRequest,
+                                @AuthenticationPrincipal BoardPrincipal boardPrincipal ) {
         // TODO: 인증 정보를 넣어줘야 한다.
-        articleService.updateArticle(articleId, articleRequest.toDto(UserAccountDto.of(
-                "uno", "asdf1234", "uno@mail.com", "Uno", "memo", null, null, null, null
-        )));
+        articleService.updateArticle(articleId, articleRequest.toDto(boardPrincipal.toDto()));
 
         return "redirect:/articles/" + articleId;
     }
@@ -123,7 +122,7 @@ public class ArticleController {
     @PostMapping ("/{articleId}/delete")
     public String deleteArticle(
             @PathVariable Long articleId,
-            @AuthenticationPrincipal BoardPrincipal boardPrincipal
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal  //principal(인증정보)로 가져올 수 있다
             ) {
         // TODO: 인증 정보를 넣어줘야 한다.
         articleService.deleteArticle(articleId,boardPrincipal.getUsername());
